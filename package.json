@@ -1,0 +1,23 @@
+{
+  "name": "stylus-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "styl.js",
+  "scripts": {
+    "test": "node styl.js --filename=path/to/sheet.styl"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/akselnordal/stylus-example.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akselnordal/stylus-example/issues"
+  },
+  "homepage": "https://github.com/akselnordal/stylus-example",
+  "devDependencies": {
+    "stylus": "^0.49.3",
+    "yargs": "^1.3.3"
+  }
+}
