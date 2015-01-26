@@ -7,14 +7,24 @@ var gulp = require('gulp'),
 	filename = 'path/to/sheet.styl',
 	input = fs.readFileSync(filename, 'utf8'),
 	output = filename.replace(/.styl/, '.css'),
-	mapFile = output + '.map';
+	mapFile = output + '.map',
+	assert = require('assert');
 
+
+function checkOutput(css) {
+	if(css.indexOf('subFolder/image-inside-subFolder.png') < 0 ||
+		css.indexOf('sourceMappingURL=sheet.css.map') < 0) {
+		console.error('oh oh. resolving of url did not work as expected', css);
+	} else {
+		console.log('resolving of url + sourcemaps succeeded', css);
+	}
+}
 
 gulp.task('cleanOutput', function(){
 	return gulp.src([output, mapFile]).pipe(rimraf());
 });
 
-gulp.task('gulp-stylus', ['cleanOutput'], function(){
+gulp.task('gulp-stylus-task', function(){
 	return gulp.src(filename)
 		.pipe(gstylus({
 			define: {
@@ -24,13 +34,11 @@ gulp.task('gulp-stylus', ['cleanOutput'], function(){
 				basePath: 'path/to'
 			}
 		}))
-		.pipe(gulp.dest('.'))
-		.on('data', function(data){
-			console.log('data', data);
-		})
-		.on('error', function(err){
-			console.log('gulp-stylus failed', err);
-		});
+		.pipe(gulp.dest('.'));
+});
+
+gulp.task('gulp-stylus', ['gulp-stylus-task'], function(){
+	checkOutput(fs.readFileSync(output, 'utf8'));
 });
 
 
@@ -49,7 +57,7 @@ gulp.task('stylus-standalone', ['cleanOutput'], function(done){
 		} 
 		fs.writeFileSync(output, css);
 		fs.writeFileSync(mapFile, JSON.stringify(style.sourcemap));
-		console.log(css);
+		checkOutput(css);
 		done();
 	});
 
