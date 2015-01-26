@@ -26,14 +26,19 @@ gulp.task('cleanOutput', function(){
 
 gulp.task('gulp-stylus-task', function(){
 	return gulp.src(filename)
+		.pipe(sourcemaps.init())
 		.pipe(gstylus({
 			define: {
 				url: stylus.resolver()
 			},
-			sourcemap: {
-				basePath: 'path/to'
-			}
+			//sourcemap: {
+			//	basePath: 'path/to'
+			//}
 		}))
+		.pipe(sourcemaps.write())
+		.on('error', function(e) {
+			console.log(e);
+		})
 		.pipe(gulp.dest('.'));
 });
 
@@ -54,7 +59,7 @@ gulp.task('stylus-standalone', ['cleanOutput'], function(done){
 	style.render(function(err, css){
 		if(err) {
 			throw new Error(err);
-		} 
+		}
 		fs.writeFileSync(output, css);
 		fs.writeFileSync(mapFile, JSON.stringify(style.sourcemap));
 		checkOutput(css);
