@@ -4,7 +4,7 @@
   "description": "",
   "main": "styl.js",
   "scripts": {
-    "test": "node styl.js --filename=path/to/sheet.styl"
+    "test": "echo 'run first `gulp stylus-standalone`, then `gulp gulp-stylus`'"
   },
   "repository": {
     "type": "git",
