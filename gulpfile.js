@@ -21,19 +21,22 @@ function checkOutput(css) {
 }
 
 gulp.task('cleanOutput', function(){
-	return gulp.src([output, mapFile]).pipe(rimraf());
+	return gulp.src(['**/*.css','**/*.map']).pipe(rimraf());
 });
 
-gulp.task('gulp-stylus-task', function(){
-	return gulp.src(filename)
+gulp.task('gulp-stylus-task', ['cleanOutput'], function(){
+	// need to use wildcard to write css/map-files to correct path
+	return gulp.src('**/*.styl')
+		.pipe(sourcemaps.init())
 		.pipe(gstylus({
 			define: {
 				url: stylus.resolver()
-			},
-			sourcemap: {
-				basePath: 'path/to'
 			}
 		}))
+		.pipe(sourcemaps.write())
+		.on('error', function(e) {
+			console.log(e);
+		})
 		.pipe(gulp.dest('.'));
 });
 

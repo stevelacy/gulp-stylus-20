@@ -1,1 +1,0 @@
-{"version":3,"sources":["path/to/subFolder/another-sheet.styl"],"names":[],"mappings":"AAAA;EACE,YAA4C,kCAA5C","file":"path/to/subFolder/another-sheet.css","sourcesContent":[".button {\n  background: url('image-inside-subFolder.png');\n}"],"sourceRoot":"/source/"}
